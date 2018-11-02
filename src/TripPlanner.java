@@ -3,6 +3,7 @@ import java.text.DecimalFormat;
 import java.math.RoundingMode;
 
 public class TripPlanner {
+    // Reduce the decimal places to 1 or 2 depending
     private static DecimalFormat df2 = new DecimalFormat(".##");
     private static DecimalFormat df1 = new DecimalFormat(".#");
 
@@ -14,6 +15,8 @@ public class TripPlanner {
         TimeDifference();
         SquareArea();
     }
+    
+    // Method for gathering user information such as name and destination
     public static void NameAndLocation() {
         Scanner input = new Scanner(System.in);
         System.out.println("Welcome to Vacation Planner!");
@@ -26,6 +29,8 @@ public class TripPlanner {
         System.out.println();
         System.out.println();
     }
+    
+    // Method for determining budget over duration of trip
     public static void DurationMoney(){
         Scanner input = new Scanner(System.in);
         System.out.print("How many days are you going to spend travelling? ");
@@ -46,7 +51,8 @@ public class TripPlanner {
         System.out.println("If you are traveling for " + days + " days that is the same as " + hours + " hours or " + minutes + " minutes");
 
         df2.setRoundingMode(RoundingMode.FLOOR);
-
+        
+        // Casts double as an integer to hide trailing 0's
         if (money % 1 == 0) {
             System.out.println("If you are going to spend $" + (int) money + " USD that means per day you can spend up to $" + df2.format(dailyMoney) + " USD.");
         }
@@ -61,6 +67,7 @@ public class TripPlanner {
 
     }
 
+    // Method for determining time difference
     public static void TimeDifference() {
         Scanner input = new Scanner(System.in);
 
@@ -72,6 +79,7 @@ public class TripPlanner {
         System.out.print("What is the time difference, in hours, between your home and your destination? ");
         int timeDiff = input.nextInt();
 
+        // Prevent time difference calculation from going beyond 24 hours and remain positive
         if (timeDiff > 0) {
             currentNoon = noon + timeDiff;
             currentMidnight = midnight + timeDiff;
@@ -102,16 +110,19 @@ public class TripPlanner {
         System.out.println();
     }
 
+    // Method for calculating square miles from square kilometers
     public static void SquareArea(){
         Scanner input = new Scanner(System.in);
 
         System.out.print("What is the square area of your destination country in km2? ");
         double km = input.nextInt();
-
+        
+        // Convert km to miles
         df1.setRoundingMode(RoundingMode.FLOOR);
         double miles = km * 0.3861;
         System.out.println("In miles2 that is " + df1.format(miles));
-
+        
+        // Get coordinates
         System.out.print("What is your starting latitude? ");
         double lat1 = input.nextDouble();
         System.out.print("What is your starting longitude? ");
@@ -128,6 +139,7 @@ public class TripPlanner {
         System.out.println();
     }
 
+    // Haversine method for determining distance between two points on the globe
     public static double haversine(double lat1, double lon1, double lat2, double lon2) {
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
